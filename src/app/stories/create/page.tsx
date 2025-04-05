@@ -1,7 +1,9 @@
-export default function Page () {
+import { Form } from "@/components/stories/create/form";
+
+export default function Page() {
   return (
-    <div>
-      あああ
+    <div className="p-4">
+      <Form />
     </div>
-  )
+  );
 }
