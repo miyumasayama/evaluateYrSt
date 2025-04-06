@@ -4,7 +4,7 @@ import { FC } from "react";
 
 export const Navbar: FC = () => {
   return (
-    <div className="shadow-md bg-violet-100 fixed z-40 h-15 w-full">
+    <div className="shadow-md bg-slate-50 fixed z-40 h-15 w-full">
       <div className="flex justify-between p-4">
         <Link className="" href="/">
           <div className="w-32">ロゴ</div>
