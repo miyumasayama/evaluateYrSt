@@ -4,13 +4,12 @@ import { FC } from "react";
 
 export const Form: FC = () => {
   return (
-    <form className="flex flex-col gap-4">
-      <div>
-        <input
-          type="text"
+    <form className="flex flex-col items-center gap-4 w-full">
+      <div className="w-full">
+        <textarea
           id="content"
           name="content"
-          className="bg-neutral-100 w-full h-100 rounded-md p-2"
+          className="bg-neutral-100 w-full h-100 rounded-md p-2 resize-none"
         />
       </div>
       <div className="flex gap-4 w-full">
