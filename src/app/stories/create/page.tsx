@@ -1,9 +1,11 @@
 import { Form } from "@/components/stories/create/form";
+import { randomNouns } from "@/utils/stories/words";
 
-export default function Page() {
+export default async function Page() {
+    console.log(randomNouns)
   return (
     <div className="p-4">
-      <Form />
+      <Form /> 
     </div>
   );
 }
