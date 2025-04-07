@@ -1,0 +1,1 @@
+export type WordsPresence = Record<string, boolean>
