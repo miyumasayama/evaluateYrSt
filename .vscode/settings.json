@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true, // Enable formatting on save
+  "editor.tabCompletion": "on", // Enable tab completion
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Use Prettier for JavaScript
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Use Prettier for TypeScript
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // Use Prettier for React (TSX)
+  },
+  "typescript.suggest.enabled": true, // Enable TypeScript suggestions
+  "typescript.inlayHints.parameterNames.enabled": "all", // Show parameter hints
+  "typescript.inlayHints.variableTypes.enabled": true, // Show variable type hints
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true, // Show return type hints
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true // Show property type hints
+}
