@@ -5,16 +5,17 @@ const client = new Groq({
   apiKey: process.env.GROQ_API_KEY, // This is the default and can be omitted
 });
 
-type State = {
-  message: string | null;
+export type State = {
+  content: string | null;
 }
 
+const prompt = `文章を評価してください。以下のフォーマットで出力してください。スコアには、数字を、評価には300文字以内の日本語で結果を入れてください。: <h1>スコア</h1> <p>評価</p> 文章はこちらです。`;
+
 export const evaluateStory =  async (prevState: State, formData: FormData) => {
-  console.log('formData', formData);
+  const content = formData.get('content');
   const chatCompletion =await client.chat.completions.create({
-    messages: [{ role: 'user', content: 'Explain the importance of low latency LLMs' }],
+    messages: [{ role: 'user', content: prompt + content}],
     model: 'llama3-8b-8192',
   })
-  console.log(chatCompletion.choices[0].message.content, formData);
-  return {message: chatCompletion.choices[0].message.content};
+  return {content: chatCompletion.choices[0].message.content};
 };

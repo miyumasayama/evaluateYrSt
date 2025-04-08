@@ -15,19 +15,25 @@ const colors = {
 type Color = keyof typeof colors; 
 
 type Props = {
-  handleClick: () => void;
+  handleClick?: () => void;
   color?: Color;
   children: React.ReactNode;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 };
 
 export const Button: FC<Props> = ({
   handleClick,
   color = "blue",
   children,
+  type,
+  disabled = false
 }) => {
   return (
     <button
-      onClick={handleClick}
+      type={type}
+      onClick={handleClick && handleClick}
+      disabled={disabled}
       className={`w-full ${colors[color].default} ${colors[color].hover} px-4 py-2 text-white font-bold rounded-md transition-colors duration-300 hover:cursor-pointer`}
     >
       {children}

@@ -2,7 +2,8 @@
 import { Button } from "@/components/commons/button";
 import { WordsPresence } from "@/types/stories";
 import { FC, useActionState } from "react";
-import {evaluateStory} from "@/api/stories";
+import { evaluateStory, State } from "@/api/stories";
+import parse from 'html-react-parser';
 
 type Props = {
   content: string;
@@ -10,13 +11,14 @@ type Props = {
   wordsPresence: WordsPresence;
 };
 
+const initialState: State = {content: null };
+
 export const Form: FC<Props> = ({ content, handleChange, wordsPresence }) => {
-  const isSomeFalse = Object.values(wordsPresence).some((value) => !value); 
-  const initialState: State = { message: null };
+  const isSomeFalse = Object.values(wordsPresence).some((value) => !value);
   const [state, formAction] = useActionState(evaluateStory, initialState);
-console.log(state)
+
   return (
-    <form className="flex flex-col items-center gap-4 w-full" >
+    <form className="flex flex-col items-center gap-4 w-full" action={formAction}>
       <div className="w-full">
         <textarea
           id="content"
@@ -26,7 +28,13 @@ console.log(state)
           className="bg-neutral-100 w-full h-100 rounded-md p-2 resize-none"
         />
       </div>
-      {state.message && (<h1 className="text-2xl text-center text-blue-700">{state.message}</h1>)}
+      {state.content && (
+        <div
+          className="text-center text-slate-50"
+        >
+          {parse(state.content)}
+        </div>
+      )}
       {isSomeFalse && (
         <div className="text-red-500 text-sm">
           すべての単語が含まれていません。
