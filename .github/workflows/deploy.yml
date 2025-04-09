@@ -1,0 +1,37 @@
+name: github-actions
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+# ワークフローで実行されるジョブをグループ化
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3   # リポジトリのコードをクローンする
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 # node.jsをセットアップする
+        with:
+          node-version: '20'        # nodeのバージョン20を指定
+
+      - name: Install dependencies
+        run: npm install            # 依存関係をインストール
+      
+      # test
+      - name: Run linter
+        run: npm run lint
+
+      - name: Build Next.js project
+        run: npm run build
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25 # Vercelにデプロイする。
+        with:                            # with以降に必要なパラメータを渡す
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_TEAM_ID }}
