@@ -1,7 +1,8 @@
 export const paths = {
-  home: '/',
+  home: "/",
   stories: {
-    root: '/stories',
-    create: '/stories/create',
-  }
-}
+    root: "/stories",
+    create: "/stories/create",
+    result: "/stories/result",
+  },
+};
