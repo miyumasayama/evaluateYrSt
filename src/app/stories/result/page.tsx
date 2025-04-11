@@ -14,8 +14,10 @@ export default async function Page() {
   return (
     <div className="px-40 py-4 flex flex-col gap-4 text-slate-100">
       <h1 className="text-slate-100">Content from Cookie:</h1>
-      <p>{content}</p>
-      <p>{score}</p>
+      <div>
+        <div>{content}</div>
+        <div>{score}</div>
+      </div>
     </div>
   );
 }
