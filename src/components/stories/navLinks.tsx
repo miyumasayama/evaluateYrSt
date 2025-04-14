@@ -14,8 +14,8 @@ export const NavLinks: FC = () => {
           <Link
             key={index}
             href={link.href}
-            className={clsx("", {
-              "bg-sky-100 text-blue-600": pathname === link.href,
+            className={clsx("font-bold", {
+              "text-stone-500": pathname === link.href,
             })}
           >
             <p className="hidden md:block">{link.name}</p>
