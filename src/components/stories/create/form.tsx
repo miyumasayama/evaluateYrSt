@@ -27,6 +27,9 @@ export const Form: FC<Props> = ({ content, handleChange, wordsPresence }) => {
           value={content}
           onChange={handleChange}
           disabled={isPending}
+          onPaste={(e) => e.preventDefault()}
+          onCopy={(e) => e.preventDefault()}
+          onCut={(e) => e.preventDefault()}
           className="bg-neutral-100 w-full h-100 rounded-md p-2 resize-none disabled:opacity-80 disabled:cursor-not-allowed"
         />
       </div>
