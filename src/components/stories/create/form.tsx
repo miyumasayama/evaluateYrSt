@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/commons/button";
 import { WordsPresence } from "@/types/stories";
 import { FC, useActionState } from "react";
 import { evaluateStory, State } from "@/api/stories";
@@ -8,11 +7,17 @@ type Props = {
   content: string;
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   wordsPresence: WordsPresence;
+  clear: () => void;
 };
 
 const initialState: State = { message: null };
 
-export const Form: FC<Props> = ({ content, handleChange, wordsPresence }) => {
+export const Form: FC<Props> = ({
+  content,
+  handleChange,
+  wordsPresence,
+  clear,
+}) => {
   const isSomeFalse = Object.values(wordsPresence).some((value) => !value);
   const [, formAction, isPending] = useActionState(evaluateStory, initialState);
   return (
@@ -39,13 +44,20 @@ export const Form: FC<Props> = ({ content, handleChange, wordsPresence }) => {
         </div>
       )}
       <div className="flex gap-4 w-full">
-        <Button handleClick={() => {}} color="red">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            clear();
+          }}
+          className="w-full bg-red-600 hover:bg-red-700 px-4 py-2 text-white font-bold rounded-md transition-colors duration-300 hover:cursor-pointer"
+        >
           削除
-        </Button>
+        </button>
         <button
           type="submit"
           formAction={formAction}
-          className={`w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white font-bold rounded-md transition-colors duration-300 hover:cursor-pointer`}
+          disabled={isPending || isSomeFalse || content.length === 0}
+          className={`w-full bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white font-bold rounded-md transition-colors duration-300 hover:cursor-pointer disabled:bg-blue-300 disabled:text-gray-200 disabled:cursor-not-allowed`}
         >
           完成
         </button>
