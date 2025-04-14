@@ -6,7 +6,7 @@ import { useWords } from "@/hooks/stories/useWords";
 
 export default function Page() {
   const { words, reset } = useWords();
-  const { content, handleChange, wordsPresence } = useStory(words);
+  const { content, handleChange, wordsPresence, clear } = useStory(words);
   return (
     <div className="px-40 py-4 flex flex-col gap-4">
       <PageHead words={words} reset={reset} />
@@ -14,6 +14,7 @@ export default function Page() {
         content={content}
         handleChange={handleChange}
         wordsPresence={wordsPresence}
+        clear={clear}
       />
     </div>
   );
