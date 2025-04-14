@@ -1,6 +1,7 @@
 import React from "react";
 import { cookies } from "next/headers";
 import parse from "html-react-parser";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const cookieStore = await cookies();
@@ -8,14 +9,26 @@ export default async function Page() {
   const score = parse(JSON.parse(cookieStore.get("score")?.value ?? ""));
 
   if (!content) {
-    return <div className="text-slate-100">No content found in cookies.</div>;
+    redirect("/stories/create");
   }
 
   return (
-    <div className="px-40 py-4 flex flex-col gap-4 text-slate-100">
-      <h1 className="text-slate-100">Content from Cookie:</h1>
-      <p>{content}</p>
-      <p>{score}</p>
+    <div className="px-40 py-10 flex flex-col gap-4 text-slate-100">
+      <h1 className="text-slate-50 font-bold text-xl underline decoration-blue-700">
+        <span>✨</span>採点結果
+      </h1>
+      <div>
+        <h2 className="text-slate-50 underline font-bold">
+          <span>⭐️</span>あなたが生成した文章
+        </h2>
+        <div>{content}</div>
+      </div>
+      <div>
+        <h2 className="text-slate-50 underline font-bold">
+          <span>⭐️</span>評価結果
+        </h2>
+        <div>{score}</div>
+      </div>
     </div>
   );
 }
