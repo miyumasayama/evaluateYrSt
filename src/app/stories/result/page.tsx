@@ -2,6 +2,7 @@ import React from "react";
 import { cookies } from "next/headers";
 import parse from "html-react-parser";
 import { redirect } from "next/navigation";
+import { SecondaryButton } from "@/components/commons/secondaryButton";
 
 export default async function Page() {
   const cookieStore = await cookies();
@@ -28,6 +29,10 @@ export default async function Page() {
           <span>⭐️</span>評価結果
         </h2>
         <div>{score}</div>
+      </div>
+      <div className="flex gap-4 mt-20 w-1/2">
+        <SecondaryButton color="green">修正する</SecondaryButton>
+        <SecondaryButton>新しく作成する</SecondaryButton>
       </div>
     </div>
   );

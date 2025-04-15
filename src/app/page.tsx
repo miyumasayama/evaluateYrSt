@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/commons/button";
+import { PrimaryButton } from "@/components/commons/primaryButton";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -15,9 +15,9 @@ export default function Home() {
         〜オリジナルの物語を作って採点してみよう〜
       </h2>
       <div>
-        <Button handleClick={() => router.push("/stories/create")}>
+        <PrimaryButton handleClick={() => router.push("/stories/create")}>
           書いてみる
-        </Button>
+        </PrimaryButton>
       </div>
     </div>
   );
