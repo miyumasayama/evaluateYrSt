@@ -1,6 +1,6 @@
 import { WordsPresence } from "@/types/stories";
 import { checkWordsPresence } from "@/utils/stories/validate";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useStory = (words: string[]) => {
   const [content, setContent] = useState<string>("");
@@ -24,6 +24,15 @@ export const useStory = (words: string[]) => {
       }, {})
     );
   };
+
+  useEffect(() => {
+    setWordsPresence(
+      words.reduce<WordsPresence>((acc, word) => {
+        acc[word] = false;
+        return acc;
+      }, {})
+    );
+  }, [words]);
 
   return {
     handleChange,
