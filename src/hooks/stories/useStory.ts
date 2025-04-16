@@ -1,6 +1,7 @@
 import { WordsPresence } from "@/types/stories";
 import { checkWordsPresence } from "@/utils/stories/validate";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 export const useStory = (words: string[]) => {
   const [content, setContent] = useState<string>("");
@@ -26,12 +27,18 @@ export const useStory = (words: string[]) => {
   };
 
   useEffect(() => {
-    setWordsPresence(
-      words.reduce<WordsPresence>((acc, word) => {
-        acc[word] = false;
-        return acc;
-      }, {})
-    );
+    const content = Cookies.get("content");
+    if (content) {
+      setContent(JSON.parse(content));
+      setWordsPresence(checkWordsPresence(words, content));
+    } else {
+      setWordsPresence(
+        words.reduce<WordsPresence>((acc, word) => {
+          acc[word] = false;
+          return acc;
+        }, {})
+      );
+    }
   }, [words]);
 
   return {

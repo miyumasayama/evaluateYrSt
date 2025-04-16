@@ -1,7 +1,6 @@
 "use server";
 import { paths } from "@/utils/const";
 import Groq from "groq-sdk";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 const client = new Groq({
@@ -23,10 +22,15 @@ export const evaluateStory = async (prevState: State, formData: FormData) => {
       model: "llama3-8b-8192",
     });
     const cookieStore = await cookies();
-    cookieStore.set("content", JSON.stringify(content));
+    cookieStore.set("content", JSON.stringify(content), {
+      path: paths.stories.root,
+    });
     cookieStore.set(
       "score",
-      JSON.stringify(chatCompletion.choices[0].message.content)
+      JSON.stringify(chatCompletion.choices[0].message.content),
+      {
+        path: paths.stories.root,
+      }
     );
     return { message: "処理が完了しました" };
   } catch (error) {
@@ -37,7 +41,5 @@ export const evaluateStory = async (prevState: State, formData: FormData) => {
       message: "エラーが発生しました。もう一度お試しください。",
       error: error instanceof Error ? error.message : "Unknown error occurred",
     };
-  } finally {
-    redirect(paths.stories.result);
   }
 };

@@ -15,6 +15,7 @@ export default function Page() {
         handleChange={handleChange}
         wordsPresence={wordsPresence}
         clear={clear}
+        words={words}
       />
     </div>
   );
