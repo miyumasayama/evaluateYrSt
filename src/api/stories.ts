@@ -23,10 +23,15 @@ export const evaluateStory = async (prevState: State, formData: FormData) => {
       model: "llama3-8b-8192",
     });
     const cookieStore = await cookies();
-    cookieStore.set("content", JSON.stringify(content));
+    cookieStore.set("content", JSON.stringify(content), {
+      path: paths.stories.root,
+    });
     cookieStore.set(
       "score",
-      JSON.stringify(chatCompletion.choices[0].message.content)
+      JSON.stringify(chatCompletion.choices[0].message.content),
+      {
+        path: paths.stories.root,
+      }
     );
     return { message: "処理が完了しました" };
   } catch (error) {
