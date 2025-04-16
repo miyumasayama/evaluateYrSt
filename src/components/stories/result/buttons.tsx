@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export const Buttons: FC = () => {
   const router = useRouter();
   const handleEdit = () => {
+    Cookies.remove("score", { path: paths.stories.root });
     router.push(paths.stories.create);
   };
 
@@ -18,6 +19,7 @@ export const Buttons: FC = () => {
     if (confirmed) {
       Cookies.remove("content", { path: paths.stories.root });
       Cookies.remove("score", { path: paths.stories.root });
+      Cookies.remove("words", { path: paths.stories.root });
       router.push(paths.stories.create);
     }
   };

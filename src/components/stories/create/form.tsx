@@ -4,6 +4,7 @@ import { FC, useActionState, useEffect } from "react";
 import { evaluateStory, State } from "@/api/stories";
 import { useRouter } from "next/navigation";
 import { paths } from "@/utils/const";
+import Cookies from "js-cookie";
 
 type Props = {
   content: string;
@@ -31,7 +32,7 @@ export const Form: FC<Props> = ({
 
   useEffect(() => {
     if (state.message) {
-      localStorage.setItem("words", JSON.stringify(words));
+      Cookies.set("words", JSON.stringify(words), { path: paths.stories.root });
       router.push(paths.stories.result);
     }
   }, [router, state, words]);

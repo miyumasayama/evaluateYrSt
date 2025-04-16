@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fakerJA as faker } from "@faker-js/faker";
+import Cookies from "js-cookie";
 
 export const useWords = () => {
   const [words, setWords] = useState<string[]>([]);
@@ -10,8 +11,7 @@ export const useWords = () => {
   };
 
   useEffect(() => {
-    const savedWords = localStorage.getItem("words");
-    console.log(savedWords);
+    const savedWords = Cookies.get("words");
     if (savedWords) {
       setWords(JSON.parse(savedWords));
     } else {
