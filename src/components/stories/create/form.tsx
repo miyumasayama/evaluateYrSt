@@ -1,13 +1,16 @@
 "use client";
 import { WordsPresence } from "@/types/stories";
-import { FC, useActionState } from "react";
+import { FC, useActionState, useEffect } from "react";
 import { evaluateStory, State } from "@/api/stories";
+import { useRouter } from "next/navigation";
+import { paths } from "@/utils/const";
 
 type Props = {
   content: string;
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   wordsPresence: WordsPresence;
   clear: () => void;
+  words: string[];
 };
 
 const initialState: State = { message: null };
@@ -17,9 +20,22 @@ export const Form: FC<Props> = ({
   handleChange,
   wordsPresence,
   clear,
+  words,
 }) => {
+  const router = useRouter();
   const isSomeFalse = Object.values(wordsPresence).some((value) => !value);
-  const [, formAction, isPending] = useActionState(evaluateStory, initialState);
+  const [state, formAction, isPending] = useActionState(
+    evaluateStory,
+    initialState
+  );
+
+  useEffect(() => {
+    if (state.message) {
+      localStorage.setItem("words", JSON.stringify(words));
+      router.push(paths.stories.result);
+    }
+  }, [router, state, words]);
+
   return (
     <form
       className="flex flex-col items-center gap-4 w-full"

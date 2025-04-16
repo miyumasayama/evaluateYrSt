@@ -1,7 +1,6 @@
 "use server";
 import { paths } from "@/utils/const";
 import Groq from "groq-sdk";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 const client = new Groq({
@@ -42,7 +41,5 @@ export const evaluateStory = async (prevState: State, formData: FormData) => {
       message: "エラーが発生しました。もう一度お試しください。",
       error: error instanceof Error ? error.message : "Unknown error occurred",
     };
-  } finally {
-    redirect(paths.stories.result);
   }
 };
