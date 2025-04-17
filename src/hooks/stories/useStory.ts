@@ -28,9 +28,12 @@ export const useStory = (words: string[]) => {
 
   useEffect(() => {
     const content = Cookies.get("content");
-    if (content) {
+    const savedWords = Cookies.get("words");
+    if (content && savedWords) {
       setContent(JSON.parse(content));
-      setWordsPresence(checkWordsPresence(words, content));
+      setWordsPresence(
+        checkWordsPresence(JSON.parse(savedWords), JSON.parse(content))
+      );
     } else {
       setWordsPresence(
         words.reduce<WordsPresence>((acc, word) => {

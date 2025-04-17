@@ -10,6 +10,7 @@ export const checkWordsPresence = (
   words.forEach((word) => {
     result[word] = textList.includes(word.toLowerCase()); // Check if the word is present
   });
+  console.log(result);
 
   return result; // Return the WordsPresence object
 };
