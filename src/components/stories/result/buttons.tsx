@@ -32,14 +32,18 @@ export const Buttons: FC = () => {
     if (!content || !reviews || !words) return;
     // TODO: データがなかった場合の処理
     try {
-      const data = await createStory(
+      await createStory(
         JSON.parse(reviews),
         JSON.parse(content),
         JSON.parse(words)
       );
-      console.log(data);
     } catch (e) {
       console.error(e);
+    } finally {
+      Cookies.remove("content", { path: paths.stories.root });
+      Cookies.remove("reviews", { path: paths.stories.root });
+      Cookies.remove("words", { path: paths.stories.root });
+      router.push(paths.stories.root);
     }
   };
   return (
