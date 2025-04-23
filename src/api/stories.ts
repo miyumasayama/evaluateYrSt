@@ -4,6 +4,7 @@ import Groq from "groq-sdk";
 import { cookies } from "next/headers";
 import { neon } from "@neondatabase/serverless";
 import { Story } from "@/types/stories";
+import { parseReviews } from "@/utils/stories/extract";
 
 const client = new Groq({
   apiKey: process.env.GROQ_API_KEY, // This is the default and can be omitted
@@ -28,7 +29,7 @@ export const evaluateStory = async (prevState: State, formData: FormData) => {
       path: paths.stories.root,
     });
     cookieStore.set(
-      "score",
+      "reviews",
       JSON.stringify(chatCompletion.choices[0].message.content),
       {
         path: paths.stories.root,
@@ -52,6 +53,24 @@ export const getStories = async () => {
     const data = await sql`SELECT * FROM stories`;
     // Insert the comment from the form into the Postgres database
     return data as Story[];
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createStory = async (
+  reviews: string,
+  content: string,
+  words: string[]
+) => {
+  try {
+    const { score, review } = parseReviews(reviews);
+    // TODO: parse時のerror
+    const sql = neon(`${process.env.DATABASE_URL}`);
+    const data =
+      await sql`INSERT INTO stories (content, score, review, words) VALUES (${content}, ${score}, ${review}, ${words})`;
+    return data;
+    return "";
   } catch (error) {
     console.error(error);
   }

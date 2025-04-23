@@ -21,7 +21,7 @@ export default function ReloadChecker() {
       );
       if (shouldDelete) {
         Cookies.remove("content", { path: paths.stories.root });
-        Cookies.remove("score", { path: paths.stories.root });
+        Cookies.remove("reviews", { path: paths.stories.root });
         Cookies.remove("words", { path: paths.stories.root });
         router.push(paths.stories.create);
       }
