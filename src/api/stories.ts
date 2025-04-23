@@ -2,6 +2,7 @@
 import { paths } from "@/utils/const";
 import Groq from "groq-sdk";
 import { cookies } from "next/headers";
+import { neon } from "@neondatabase/serverless";
 
 const client = new Groq({
   apiKey: process.env.GROQ_API_KEY, // This is the default and can be omitted
@@ -41,5 +42,15 @@ export const evaluateStory = async (prevState: State, formData: FormData) => {
       message: "エラーが発生しました。もう一度お試しください。",
       error: error instanceof Error ? error.message : "Unknown error occurred",
     };
+  }
+};
+
+export const getStories = async () => {
+  try {
+    const sql = neon(`${process.env.DATABASE_URL}`);
+    // Insert the comment from the form into the Postgres database
+    return await sql("SELECT * FROM stories");
+  } catch (error) {
+    console.error(error);
   }
 };
