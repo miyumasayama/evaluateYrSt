@@ -11,6 +11,9 @@ const colors = {
   green: {
     default: "text-green-600",
   },
+  amber: {
+    default: "text-amber-600",
+  },
 };
 
 type Color = keyof typeof colors;

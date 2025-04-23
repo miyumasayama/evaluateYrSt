@@ -10,11 +10,11 @@ export default async function Page() {
   const content = cookieStore.get("content")?.value
     ? parse(JSON.parse(cookieStore.get("content")?.value ?? ""))
     : "";
-  const score = cookieStore.get("score")?.value
-    ? parse(JSON.parse(cookieStore.get("score")?.value ?? ""))
+  const reviews = cookieStore.get("reviews")?.value
+    ? parse(JSON.parse(cookieStore.get("reviews")?.value ?? ""))
     : "";
 
-  if (!content || !score) {
+  if (!content || !reviews) {
     redirect(paths.stories.create);
   }
   return (
@@ -32,7 +32,7 @@ export default async function Page() {
         <h2 className="text-slate-50 underline font-bold">
           <span>⭐️</span>評価結果
         </h2>
-        <div>{score}</div>
+        <div>{reviews}</div>
       </div>
       <Buttons />
     </div>
