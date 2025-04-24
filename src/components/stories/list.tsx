@@ -16,9 +16,9 @@ export const List: FC<Props> = ({ stories }) => {
           <thead>
             <tr className="bg-blue-100 text-blue-800 border-b border-blue-300">
               <th className="text-left px-4 py-2 w-3/5 border-r border-blue-300">
-                Content
+                お話
               </th>
-              <th className="text-left px-4 py-2 w-2/5">Words</th>
+              <th className="text-left px-4 py-2 w-2/5">指定単語</th>
             </tr>
           </thead>
           <tbody>
@@ -27,7 +27,7 @@ export const List: FC<Props> = ({ stories }) => {
                 <td className="px-4 py-3 border-r border-blue-200">
                   {story.content}
                 </td>
-                <td className="px-4 py-3">{story.words?.join(", ") ?? "-"}</td>
+                <td className="px-4 py-3">{story.words?.join(" ") ?? "-"}</td>
               </tr>
             ))}
           </tbody>
