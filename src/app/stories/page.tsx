@@ -7,9 +7,10 @@ import { limit } from "@/utils/stories/const";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const page = parseInt(searchParams.page || "1", 10);
+  const { page: currentPage } = await searchParams; // ✅ Await the Promise to get the resolved value
+  const page = parseInt(currentPage || "1", 10);
   const offset = (page - 1) * limit;
   const { data: stories, total } = await getStories(offset);
 
