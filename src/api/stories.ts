@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { neon } from "@neondatabase/serverless";
 import { Story } from "@/types/stories";
 import { parseReviews } from "@/utils/stories/extract";
+import { limit } from "@/utils/stories/const";
 
 const client = new Groq({
   apiKey: process.env.GROQ_API_KEY, // This is the default and can be omitted
@@ -15,7 +16,7 @@ export type State = {
   error?: string;
 };
 
-const prompt = `文章を評価してください。以下のフォーマットで出力してください。スコアには、数字を10点中という表記で、評価には300文字以内の日本語で結果を入れてください。: <h1>スコア</h1> <p>評価</p> 文章はこちらです。`;
+const prompt = `文章を厳しく評価してください。以下のフォーマットで出力してください。スコアには、数字を10点中という表記で整数の得点を、評価には300文字以内の日本語で結果を入れてください。: <h1>スコア</h1> <p>評価</p> 文章はこちらです。`;
 
 export const evaluateStory = async (prevState: State, formData: FormData) => {
   try {
@@ -47,14 +48,25 @@ export const evaluateStory = async (prevState: State, formData: FormData) => {
   }
 };
 
-export const getStories = async () => {
+export const getStories = async (offset: number) => {
   try {
     const sql = neon(`${process.env.DATABASE_URL}`);
-    const data = await sql`SELECT * FROM stories`;
+    // const data = await sql`SELECT * FROM stories`;
     // Insert the comment from the form into the Postgres database
-    return data as Story[];
+
+    const data = await sql`
+    SELECT * FROM stories ORDER BY id DESC LIMIT ${limit} OFFSET ${offset};
+  `;
+
+    // 総件数を取得
+    const countResult = await sql`
+    SELECT COUNT(*) FROM stories;
+  `;
+    const total = Number(countResult[0].count);
+
+    return { data: data as Story[], total };
   } catch (error) {
-    console.error(error);
+    return { data: [], total: 0, error };
   }
 };
 
@@ -70,7 +82,6 @@ export const createStory = async (
     const data =
       await sql`INSERT INTO stories (content, score, review, words) VALUES (${content}, ${score}, ${review}, ${words})`;
     return data;
-    return "";
   } catch (error) {
     console.error(error);
   }

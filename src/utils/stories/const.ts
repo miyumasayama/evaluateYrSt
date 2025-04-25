@@ -8,3 +8,5 @@ export const links = [
   },
   { name: "my page", href: paths.home },
 ];
+
+export const limit = 10;
